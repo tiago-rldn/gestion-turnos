@@ -4,13 +4,18 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.tiago.gestion_turnos.converter.DaysOfWeekListConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "configuracion_jornada")
 public class ConfiguracionJornada {
@@ -20,11 +25,15 @@ public class ConfiguracionJornada {
 
     @Column(name = "hora_apertura", nullable = false)
     private LocalTime horaApertura;
+
     @Column(name = "hora_cierre", nullable = false)
     private LocalTime horaCierre;
+
     @Column(name = "duracion_turno_minutos", nullable = false)
-    private int duracionTurnoMinutos;
-    @Column(name = "dias_laborales", nullable = false)
+    private Integer duracionTurnoMinutos;
+
+    @Column(name = "dias_laborables", nullable = false)
+    @Convert(converter = DaysOfWeekListConverter.class)
     private List<DayOfWeek> diasLaborales;
 
     public Long getId() {

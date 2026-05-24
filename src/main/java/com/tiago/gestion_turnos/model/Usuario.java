@@ -1,6 +1,10 @@
 package com.tiago.gestion_turnos.model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,8 +21,9 @@ import jakarta.persistence.Table;
 @Table(name = "usuarios")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private UUID id;
 
     private String nombre;
     private String apellido;
@@ -33,10 +38,10 @@ public class Usuario {
     @OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<Turno> turnos = new ArrayList<Turno>();
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public String getNombre() {
